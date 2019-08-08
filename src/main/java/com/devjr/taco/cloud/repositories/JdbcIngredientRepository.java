@@ -21,25 +21,26 @@ public class JdbcIngredientRepository implements IngredientRepository{
 
     @Override
     public Iterable<Ingredient> findAll(){
-        return this.jdbc.query("SELECT id, name, type FROM Ingredient", this::mapRowToIngredient);
+        String sql = "SELECT " + S_TING_ID + ", " + S_TING_NAME + ", " + S_TING_TYPE + " FROM " + S_TABLE_ING;
+        return this.jdbc.query(sql, this::mapRowToIngredient);
     }
 
     @Override
     public Ingredient findOne(String id){
-        return this.jdbc.queryForObject("SELECT id, name, type FROM Ingredient WHERE id=?", this::mapRowToIngredient,
-                id);
+        String sql = "SELECT " + S_TING_ID + ", " + S_TING_NAME + ", " + S_TING_TYPE + " FROM " + S_TABLE_ING + " WHERE " + S_TING_ID + "=?";
+        return this.jdbc.queryForObject(sql, this::mapRowToIngredient, id);
     }
 
     @Override
     public Ingredient save(Ingredient ingredient){
-        jdbc.update("INSERT INTO Ingredient (id, name, type) VALUES (?, ?, ?)", ingredient.getId(),
-                ingredient.getName(), ingredient.getType().toString());
+        String sql = "INSERT INTO " + S_TABLE_ING + " (" + S_TING_ID + ", " + S_TING_NAME + ", " + S_TING_TYPE + ") VALUES (?, ?, ?)";
+        this.jdbc.update(sql, ingredient.getId(), ingredient.getName(), ingredient.getType().toString());
         return ingredient;
     }
 
     //RowMapper con mapRow()
     private Ingredient mapRowToIngredient(ResultSet rs, int rowNum) throws SQLException{
-        return new Ingredient(rs.getString("id"), rs.getString("name"), Ingredient.Type.valueOf(rs.getString("type")));
+        return new Ingredient(rs.getString(S_TING_ID), rs.getString(S_TING_NAME), Ingredient.Type.valueOf(rs.getString(S_TING_TYPE)));
     }
 
 }

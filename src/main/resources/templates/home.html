@@ -3,10 +3,11 @@
 xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>Taco Cloud</title>
+		<link rel="stylesheet" th:href="@{/styles/main.css}" />
 	</head>
 	<body>
 		<h1>Welcome to...</h1>
-		<img th:src="@{/images/TacoCloud.png}"/>
-		<h3>Vive una Experiencia única de sabores.</h3>
+		<a id="home" href="/"><img th:src="@{/images/TacoCloud.png}" alt="Logo Taco Cloud" title="Taco Cloud"/></a>
+		<h3>Vive una Experiencia única de sabores, <a id="design" href="/design">diseña tu taco</a>.</h3>
 	</body>
 </html>

@@ -38,17 +38,25 @@ public class JdbcTacoRepository implements TacoRepository{
 
     private long saveTacoInfo(Taco taco){
         taco.setCreatedAt(new Date());
-        PreparedStatementCreator psc = new PreparedStatementCreatorFactory(
-                "INSERT INTO Taco (name, createdAt) VALUES (?, ?)", Types.VARCHAR, Types.TIMESTAMP)
-                        .newPreparedStatementCreator(
-                                Arrays.asList(taco.getName(), new Timestamp(taco.getCreatedAt().getTime())));
+        PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
+                "INSERT INTO " + S_TABLE_TACO + " (" + S_TTACO_NAME + ", " + S_TTACO_CREATEDAT + ") VALUES (?, ?)",
+                Types.VARCHAR, Types.TIMESTAMP);
+        pscf.setReturnGeneratedKeys(true);
+        PreparedStatementCreator psc = pscf.newPreparedStatementCreator(
+                Arrays.asList(taco.getName(), new Timestamp(taco.getCreatedAt().getTime())));
+        /*PreparedStatementCreator psc = new PreparedStatementCreatorFactory(
+                "INSERT INTO " + S_TABLE_TACO + " (" + S_TTACO_NAME + ", " + S_TTACO_CREATEDAT + ") VALUES (?, ?)",
+                Types.VARCHAR, Types.TIMESTAMP).newPreparedStatementCreator(
+                        Arrays.asList(taco.getName(), new Timestamp(taco.getCreatedAt().getTime())));*/
         KeyHolder keyHolder = new GeneratedKeyHolder();
         this.jdbc.update(psc, keyHolder);
         return keyHolder.getKey().longValue();
     }
 
     private void saveIngredientToTaco(Ingredient ingredient, long tacoId){
-        jdbc.update("INSERT INTO Taco_Ingredients (taco, ingredient) VALUES (?, ?)", tacoId, ingredient.getId());
+        this.jdbc.update(
+                "INSERT INTO " + S_TABLE_TAING + " (" + S_TTAING_TACO + ", " + S_TTAING_ING + ") VALUES (?, ?)", tacoId,
+                ingredient.getId());
     }
 
 }

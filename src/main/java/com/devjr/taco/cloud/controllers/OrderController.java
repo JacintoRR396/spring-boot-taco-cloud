@@ -39,7 +39,7 @@ public class OrderController{
         if(errors.hasErrors()){
             return "orderForm";
         }
-        orderRepo.save(order);
+        this.orderRepo.save(order);
         sessionStatus.setComplete();
         log.info("Order submitted: " + order);
         return "redirect:/";
