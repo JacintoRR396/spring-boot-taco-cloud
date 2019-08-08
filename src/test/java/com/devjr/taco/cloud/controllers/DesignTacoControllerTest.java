@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -63,12 +64,12 @@ public class DesignTacoControllerTest{
                 new Ingredient("SRCR", "Sour Cream", Ingredient.Type.SAUCE));
 
         when(this.ingredientRepository.findAll()).thenReturn(this.ingredients);
-        when(this.ingredientRepository.findOne("FLTO"))
-                .thenReturn(new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP));
-        when(this.ingredientRepository.findOne("GRBF"))
-                .thenReturn(new Ingredient("GRBF", "Ground Beef", Ingredient.Type.PROTEIN));
-        when(this.ingredientRepository.findOne("CHED"))
-                .thenReturn(new Ingredient("CHED", "Cheddar", Ingredient.Type.CHEESE));
+        when(ingredientRepository.findById("FLTO"))
+                .thenReturn(Optional.of(new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP)));
+        when(ingredientRepository.findById("GRBF"))
+                .thenReturn(Optional.of(new Ingredient("GRBF", "Ground Beef", Ingredient.Type.PROTEIN)));
+        when(ingredientRepository.findById("CHED"))
+                .thenReturn(Optional.of(new Ingredient("CHED", "Cheddar", Ingredient.Type.CHEESE)));
 
         this.design = new Taco();
         this.design.setCreatedAt(new Date());
