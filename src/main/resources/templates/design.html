@@ -5,7 +5,11 @@
 		<link rel="stylesheet" th:href="@{/styles/main.css}" />
 		<link rel="stylesheet" th:href="@{/styles/design.css}" />
 	</head>
+	
 	<body>
+		<form method="POST" th:action="@{/logout}" id="logoutForm">
+	     	<input type="submit" value="Logout"/>
+	    </form>
 		<h1>Design your Taco!</h1>
 		<a id="home" href="/"><img th:src="@{/images/TacoCloud.png}" alt="Logo Taco Cloud" title="Taco Cloud"/></a>
 		

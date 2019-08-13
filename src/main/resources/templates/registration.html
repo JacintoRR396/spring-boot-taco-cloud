@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+   <title>Taco Cloud</title>
+   		<link rel="stylesheet" th:href="@{/styles/main.css}" />
+   		<link rel="stylesheet" th:href="@{/styles/form.css}" />
+	</head>
+  
+	<body>
+	    <h1>Register</h1>
+	    <img th:src="@{/images/TacoCloud.png}"/>    
+	    
+	    <form id="registerForm" method="POST" th:action="@{/register}" th:object="${user}" >
+	    
+	    	<div class="label-group">
+	    		<label for="username">Username: </label>
+	        	<input type="text" name="username" th:field="*{username}" />
+	        	<span class="validationError"
+		            th:if="${#fields.hasErrors('username')}" 
+		            th:errors="*{username}">Username Error</span>
+	        	<br/>
+	    	</div>
+			<div class="label-group">
+	    		<label for="password">Password: </label>
+	        	<input type="password" name="password"/><br/>
+	    	</div>
+			<div class="label-group">
+	    		<label for="confirm">Confirm password: </label>
+	        	<input type="password" name="confirm"/><br/>
+	    	</div>
+			<div class="label-group">
+		        <label for="fullname">Full name: </label>
+		        <input type="text" name="fullname"/><br/>
+	    	</div>
+	    	<div class="label-group">
+	    		<label for="street">Street: </label>
+	        	<input type="text" name="street"/><br/>
+	    	</div>
+	    	<div class="label-group">
+	    		<label for="city">City: </label>
+	        	<input type="text" name="city"/><br/>
+	    	</div>
+	    	<div class="label-group">
+	    		<label for="state">State: </label>
+	        	<input type="text" name="state"/><br/>
+	    	</div>
+	    	<div class="label-group">
+	    		<label for="zip">Zip: </label>
+	        	<input type="text" name="zip"/><br/>
+	    	</div>
+	    	<div class="label-group">
+	    		<label for="phone">Phone: </label>
+	        	<input type="text" name="phone"/><br/>
+	    	</div>
+	        <input type="submit" value="Register"/>
+	    </form>
+	    
+	</body>
+</html>

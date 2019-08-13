@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Taco Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles/main.css}" />
+    <link rel="stylesheet" th:href="@{/styles/form.css}" />
+  </head>
+  
+  <body>
+    <h1>Login</h1>
+    <a id="home" href="/"><img th:src="@{/images/TacoCloud.png}" alt="Logo Taco Cloud" title="Taco Cloud"/></a>
+    
+    <!--<div th:if="${error}"> 
+      Unable to login. Check your Username and Password.
+    </div>-->
+    
+    <p><strong>New here?</strong> Click 
+       <a th:href="@{/register}"><strong>here</strong></a> to <i>Register</i>.</p>
+    
+    <form id="loginForm" method="POST" th:action="@{/login}" th:object="${user}">
+	    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+	    <fieldset>
+		    <div class="label-group">
+		    	<label for="username">Username: </label>
+		      	<input type="text" name="username" id="username" /><br/><!-- th:field="*{username}"  -->
+		      	<!-- <span class="validationError"
+		            th:if="${#fields.hasErrors('username')}"
+		            th:errors="*{username}">Username Error</span> -->
+		    </div>
+		    <div class="label-group">
+		    	<label for="password">Password: </label>
+		      	<input type="password" name="password" id="password" /><br/><!--  th:field="*{password}" -->
+		      	<!-- <span class="validationError"
+		            th:if="${#fields.hasErrors('password')}"
+		            th:errors="*{password}">Password Error</span> -->
+		    </div>
+		    <input type="submit" value="Login"/>
+	    </fieldset>
+    </form>
+  </body>
+</html>

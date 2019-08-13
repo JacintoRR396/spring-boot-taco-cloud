@@ -1,5 +1,7 @@
-h1{
-	margin-left: 4em;
+body{
+	width: 80%;
+    margin: 1em auto;
+    text-align: center;
 }
 a{
 	text-decoration: none;

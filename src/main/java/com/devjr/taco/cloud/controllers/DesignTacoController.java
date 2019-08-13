@@ -1,5 +1,6 @@
 package com.devjr.taco.cloud.controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.devjr.taco.cloud.entities.Ingredient;
 import com.devjr.taco.cloud.entities.Order;
 import com.devjr.taco.cloud.entities.Taco;
+import com.devjr.taco.cloud.entities.User;
 import com.devjr.taco.cloud.repositories.IngredientRepository;
 import com.devjr.taco.cloud.repositories.TacoRepository;
+import com.devjr.taco.cloud.repositories.UserRepository;
 import com.devjr.taco.cloud.tools.UtilityConfig;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +35,15 @@ import lombok.extern.slf4j.Slf4j;
 public class DesignTacoController{
 
     private final IngredientRepository ingredientRepo;
-    private final TacoRepository designRepo;
+    private TacoRepository tacoRepo;
+    private UserRepository userRepo;
 
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo){
+    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo,
+            UserRepository userRepo){
         this.ingredientRepo = ingredientRepo;
-        this.designRepo = designRepo;
+        this.tacoRepo = designRepo;
+        this.userRepo = userRepo;
     }
 
     @ModelAttribute(name = "order")
@@ -52,13 +58,17 @@ public class DesignTacoController{
 
     @GetMapping
     //@RequestMapping(method=RequestMethod.GET)
-    public String showDesignForm(Model model){
+    public String showDesignForm(Model model, Principal principal){
+        log.info("   --- Designing taco");
         List<Ingredient> ingredients = new ArrayList<>();
         this.ingredientRepo.findAll().forEach(i -> ingredients.add(i));
         Ingredient.Type[] types = Ingredient.Type.values();
         for(Ingredient.Type type : types){
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
         return UtilityConfig.S_VIEW_DESIGN;
     }
 
@@ -68,13 +78,13 @@ public class DesignTacoController{
 
     @PostMapping
     public String processDesign(@Valid Taco design, Errors errors, @ModelAttribute Order order){
+        log.info("   --- Saving taco: " + design);
         if(errors.hasErrors()){
             return UtilityConfig.S_VIEW_DESIGN;
         }
-        Taco saved = this.designRepo.save(design);
+        Taco saved = this.tacoRepo.save(design);
         order.addDesign(saved);
-        log.info("Processing design: " + design);
-        return "redirect:/orders/current";
+        return "redirect:" + UtilityConfig.S_PATH_ORDER;
     }
 
 }
