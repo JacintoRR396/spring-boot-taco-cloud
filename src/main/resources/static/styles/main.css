@@ -3,14 +3,23 @@ body{
     margin: 1em auto;
     text-align: center;
 }
+#divSession{
+	margin-bottom: 2em;
+}
 a{
 	text-decoration: none;
 }
 a:hover{
 	font-weight: bold;
-	color: gray;
+	color: #FFCC36;
+	text-decoration: none;
 }
 
 span.validationError {
 	color: red;
+}
+
+/* Bootstrap CSS */
+.selector-for-some-widget {
+  box-sizing: content-box;
 }

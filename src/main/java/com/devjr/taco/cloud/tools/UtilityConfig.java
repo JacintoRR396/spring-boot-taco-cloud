@@ -20,6 +20,8 @@ public class UtilityConfig{
     public static final String S_VIEW_REGISTER = "registration";
     public static final String S_PATH_LOGOUT = S_URL_CONTEXT_ROOT + "/logout";
     public static final String S_VIEW_LOGOUT = "logout";
+    public static final String S_PATH_ACCESS_DENIED = S_URL_CONTEXT_ROOT + "/access-denied";
+    public static final String S_VIEW_ACCESS_DENIED = "accessDenied";
 
     public static final String S_PACKAGE_ROOT = "com.devjr.taco.cloud";
     public static final String S_PACKAGE_CONTROLLERS = UtilityConfig.S_PACKAGE_ROOT + ".controllers";
